@@ -39,14 +39,14 @@ func main() {
 	room = viper.GetString("Room")
 
 	app := cli.NewApp()
-	app.Version = "0.0.1"
+	app.Version = "0.0.2"
 	app.Name = "travis-build"
-	app.Usage = "Manage Claroline Connect Travis Builds"
+	app.Usage = "Manage Claroline Connect Travis Build deployments"
 	app.Commands = []cli.Command{
 		{
 			Name:    "deploy",
 			Aliases: []string{"c"},
-			Usage:   "Deploy a new Travis build",
+			Usage:   "Deploy a new Claroline Connect Travis build",
 			Action: func(c *cli.Context) error {
 				resp, err := http.Get("http://" + travisFilesUrlPrefix + c.Args().First() + travisFilesUrlPostfix)
 				if (err == nil) && (resp.StatusCode == 200) {
@@ -70,7 +70,7 @@ func main() {
 		{
 			Name:    "destroy",
 			Aliases: []string{"r"},
-			Usage:   "Destroy a Travis build deployment",
+			Usage:   "Destroy a Blaroline Connect Travis build deployment",
 			Action: func(c *cli.Context) error {
 				fmt.Println("Destroying: ", c.Args().First())
 				cmd := "docker"
@@ -89,7 +89,7 @@ func main() {
 		{
 			Name:    "list",
 			Aliases: []string{"l"},
-			Usage:   "List all Travis build deployments",
+			Usage:   "List all Claroline Connect Travis build deployments",
 			Action: func(c *cli.Context) error {
 				var (
 					cmdOut []byte
@@ -102,7 +102,7 @@ func main() {
 				}
 				output := string(cmdOut)
 				fmt.Println(output)
-				clarobotSay("Here is a list of currently deployed Travis builds:\n" + output + "")
+				clarobotSay("Here is a list of currently deployed Claroline Connect Travis builds:\n" + output + "")
 				return nil
 			},
 		},
