@@ -39,6 +39,7 @@ func main() {
 	room = viper.GetString("Room")
 
 	app := cli.NewApp()
+	app.Version = "0.0.1"
 	app.Name = "travis-build"
 	app.Usage = "Manage Claroline Connect Travis Builds"
 	app.Commands = []cli.Command{
@@ -50,7 +51,7 @@ func main() {
 				resp, err := http.Get("http://" + travisFilesUrlPrefix + c.Args().First() + travisFilesUrlPostfix)
 				if (err == nil) && (resp.StatusCode == 200) {
 					fmt.Println("Deploying: ", c.Args().First())
-					clarobotSay("TEST : I am deploying a travis build here: [" + c.Args().First() + "](http://" + c.Args().First() + "." + travisBuildUrl + "), the build will be up and running in about 30s")
+					clarobotSay("I am deploying a travis build here: [" + c.Args().First() + "](http://" + c.Args().First() + "." + travisBuildUrl + "), the build will be up and running in about 30s")
 				} else {
 					clarobotSay("Sorry dudes and dudettes I cant reach the travis build (" + c.Args().First() + "), it probably does not exist!")
 					os.Exit(1)
@@ -81,7 +82,7 @@ func main() {
 					os.Exit(1)
 				}
 				fmt.Println("Successfully destroyed container: " + c.Args().First())
-				clarobotSay("TEST : I just nuked a travis build deployment (" + c.Args().First() + ")")
+				clarobotSay("I just nuked a travis build deployment (" + c.Args().First() + ")")
 				return nil
 			},
 		},
@@ -101,7 +102,7 @@ func main() {
 				}
 				output := string(cmdOut)
 				fmt.Println(output)
-				clarobotSay("TEST : Here is a list of currently deployed Travis builds:\n" + output + "")
+				clarobotSay("Here is a list of currently deployed Travis builds:\n" + output + "")
 				return nil
 			},
 		},
