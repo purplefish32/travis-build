@@ -6,9 +6,9 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/spf13/viper"
 	"github.com/sromku/go-gitter"
 	"github.com/urfave/cli"
-	"github.com/spf13/viper"
 )
 
 const travisBuildUrl string = "travis-build.claroline.net"
@@ -27,12 +27,12 @@ func clarobotSay(phrase string) {
 }
 
 func main() {
-	viper.SetConfigName("travis-build") // name of config file (without extension)
-	viper.AddConfigPath("/etc/travis-build/")   // path to look for the config file in
+	viper.SetConfigName("travis-build")       // name of config file (without extension)
+	viper.AddConfigPath("/etc/travis-build/") // path to look for the config file in
 
 	err := viper.ReadInConfig() // Find and read the config file
-	if err != nil { // Handle errors reading the config file
-	    panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	if err != nil {             // Handle errors reading the config file
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
 	}
 
 	gitterToken = viper.GetString("GitterToken")
