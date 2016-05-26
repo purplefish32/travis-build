@@ -39,7 +39,7 @@ func main() {
 	room = viper.GetString("Room")
 
 	app := cli.NewApp()
-	app.Version = "0.0.2"
+	app.Version = "0.0.3"
 	app.Name = "travis-build"
 	app.Usage = "Manage Claroline Connect Travis Build deployments"
 	app.Commands = []cli.Command{
