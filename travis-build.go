@@ -97,12 +97,14 @@ func main() {
 				)
 				cmd := "docker ps --format \"- {{.Names}} : {{.Status}}\" | grep pr-"
 				if cmdOut, err = exec.Command("bash", "-c", cmd).Output(); err != nil {
-					fmt.Fprintln(os.Stderr, "There was an error running the docker ps command: ", err)
-					os.Exit(1)
+					fmt.Fprintln(os.Stderr, "There are no running Travis build deployments")
+					clarobotSay("There are no running Travis build deployments")
+				} else {
+					output := string(cmdOut)
+					fmt.Println(output)
+					clarobotSay("Here is a list of currently deployed Claroline Connect Travis builds:\n" + output + "")
 				}
-				output := string(cmdOut)
-				fmt.Println(output)
-				clarobotSay("Here is a list of currently deployed Claroline Connect Travis builds:\n" + output + "")
+
 				return nil
 			},
 		},
