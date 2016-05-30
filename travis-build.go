@@ -57,7 +57,7 @@ func main() {
 	room = viper.GetString("Room")
 
 	app := cli.NewApp()
-	app.Version = "0.0.4"
+	app.Version = "0.0.5"
 	app.Name = "travis-build"
 	app.Usage = "Manage Claroline Connect Travis Build deployments"
 	app.Commands = []cli.Command{
@@ -80,7 +80,7 @@ func main() {
 							clarobotSay("Sorry dudes and dudettes I cant reach the travis build (" + c.Args().First() + "), it probably does not exist!")
 							os.Exit(1)
 						}
-						cst = "docker run -id -e BUILD=" + c.Args().First() + " -e VIRTUAL_HOST=" + c.Args().First() + "." + travisBuildUrl + " -p 80 --name " + c.Args().First() + " -t claroline"
+						cst = "docker run -id -e BUILD=" + c.Args().First() + " -e VIRTUAL_HOST=" + c.Args().First() + "." + travisBuildUrl + " -p 80 -p 9001 -p 9002 --name " + c.Args().First() + " -t claroline"
 						if err := exec.Command("bash", "-c", cst).Run(); err != nil {
 							fmt.Fprintln(os.Stderr, err)
 							clarobotSay("Sorry somthing went wrong deploying the following build: " + c.Args().First())
